@@ -7,7 +7,7 @@ export CERT_DIR="certs"
 export CERT_CLAVE=admin
 export CERT_TAMANO=1024
 export CERT_EXPIRACION=365
-export CERT_DATOS="/C=BO/ST=La_Paz/L=LP/O=agetic/CN=empresa.com"
+export CERT_DATOS="/C=BO/ST=La_Paz/L=LP/O=entidad/CN=empresa.com"
 mkdir certs
 cd certs
 openssl req -new -passout pass:$CERT_PASS -newkey rsa:$CERT_TAMANO -days $CERT_EXPIRACION -nodes -x509 -subj "${CERT_DATOS}" -keyout "${CERT_NOMBRE}.key" -out "${CERT_NOMBRE}.crt"
