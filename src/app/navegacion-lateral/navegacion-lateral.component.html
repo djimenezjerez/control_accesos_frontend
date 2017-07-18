@@ -1,0 +1,26 @@
+<ul class="side-nav fixed menuLateral">
+  <li>
+    <a href="/home">Inicio</a>
+  </li>
+  <li [hidden]="!isAdmin">
+    <a href="/personas">Lista de Usuarios</a>
+  </li>
+  <li [hidden]="!isAdmin">
+    <a href="/permisos">Permisos de Acceso</a>
+  </li>
+  <li [hidden]="!isAdmin">
+    <a href="/clientesMqtt">Clientes MQTT</a>
+  </li>
+  <li [hidden]="!isAdmin">
+    <a href="/sensores">Sensores</a>
+  </li>
+  <li [hidden]="!isAdmin">
+    <a href="/puertas">Puertas</a>
+  </li>
+  <li [hidden]="!isAdmin">
+    <a href="/historial">Historial de accesos</a>
+  </li>
+  <li>
+    <a (click)="salir()">Salir</a>
+  </li>
+</ul>

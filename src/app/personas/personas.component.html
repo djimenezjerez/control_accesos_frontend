@@ -1,0 +1,47 @@
+<div class="col s12">
+  <div class="col s12">
+    <h4>Lista de usuarios</h4>
+  </div>
+
+  <div class="col s12">
+    <a id="btnSincronizar" class="waves-effect waves-light btn blue {{(btnSincronizar.deshabilitado) ? 'disabled' : ''}}" (click)="sincronizarMicroservicio()">
+      {{btnSincronizar.texto}}
+    </a>
+  </div>
+
+  <div class="col s12">
+
+    <table class="centered tablaUsuarios">
+      <thead>
+        <th>Persona</th>
+        <th>Grabar Huella</th>
+        <th>Envíar Huella</th>
+        <th>Borrar Huella</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let persona of personas">
+          <td>
+            <a (click)="mostrarHuella(persona.id)">
+              {{persona.nombre}}
+            </a>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light {{(btnDesactivado) ? 'disabled' : ''}}" (click)="grabarHuella({id: persona.id})">
+              <i class="tiny material-icons">fingerprint</i>
+            </a>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light {{(persona.grabado) ? 'green' : 'orange'}} {{(btnDesactivado) ? 'disabled' : ''}}" (click)="enviarHuella(persona.id)">
+              <i class="tiny material-icons">forward</i>
+            </a>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light red {{(btnDesactivado) ? 'disabled' : ''}}" (click)="borrarHuella(persona.id)">
+              <i class="tiny material-icons">clear</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

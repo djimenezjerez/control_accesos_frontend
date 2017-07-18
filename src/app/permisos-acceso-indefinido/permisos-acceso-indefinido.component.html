@@ -1,0 +1,44 @@
+<div *ngIf="(puertas.length === 0); then permisosAccesosVacio else permisosAccesosContenido"></div>
+
+<ng-template #permisosAccesosVacio>
+  <div class="col s12">
+    No existen puertas registradas en el sistema
+  </div>
+</ng-template>
+
+<ng-template #permisosAccesosContenido>
+  <div class="col s12">
+    <h4>Permisos de acceso indefinido</h4>
+  </div>
+
+  <div class="col s12">
+    <table class="highlight centered tablaUsuarios">
+      <thead>
+        <th>Usuario</th>
+        <th *ngFor="let puerta of puertas">
+          <span title="{{puerta.detalle}}">{{puerta.detalle}}</span>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select #seleccionPersona materialize="material_select">
+              <option *ngFor="let persona of personas; let i = index" [value]="persona.id" [selected]="i == 0">{{persona.nombre}}</option>
+            </select>
+          </td>
+          <td *ngFor="let puerta of puertas; let i = index;">
+            <input type="checkbox" id="nP{{i}}" (change)="insertarPermiso($event, seleccionPersona.value, puerta.id)"/>
+            <label for="nP{{i}}"></label>
+          </td>
+        </tr>
+        <tr *ngFor="let permisoAcceso of permisosAcceso; let x = index;">
+          <td>{{permisoAcceso.nombre}}</td>
+          <td *ngFor="let puerta of permisoAcceso.puertas; let y = index;">
+            <input type="checkbox" id="p{{x}}{{y}}" [checked]="puerta.permiso" (change)="puerta.permiso = !puerta.permiso; cambiarPermiso(puerta.permiso, puerta.puerta, permisoAcceso.persona)"/>
+            <label for="p{{x}}{{y}}"></label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

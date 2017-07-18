@@ -1,0 +1,7 @@
+.tablaUsuarios {
+  table-layout: fixed;
+}
+
+th {
+  text-align:center
+}

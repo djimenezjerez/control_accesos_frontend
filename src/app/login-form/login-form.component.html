@@ -1,0 +1,23 @@
+<div class="centrado col s3">
+  <div class="col s12">
+    <h5>
+      Control de accesos
+    </h5>
+  </div>
+  <div class="input-field col s12">
+    <label for="usuario">Nombre de usuario</label>
+    <input id="usuario" placeholder="Introduzca su usuario" type="text" [(ngModel)]="usuario.nombre" required="true" autofocus="true">
+  </div>
+  <div class="input-field col s12">
+    <label for="clave">Contraseña</label>
+    <input id="clave" placeholder="Introduzca su contraseña" type="password" [(ngModel)]="usuario.clave" (keyup.enter)="autenticar()" required="true">
+  </div>
+  <div class="col s12">
+    <div id="textoError" [hidden]="!error.valor">{{error.mensaje}}</div>
+  </div>
+  <div class="col s2 offset-s10">
+    <a class="btn-floating waves-effect waves-light green" (click)="autenticar()">
+      <i class="material-icons">send</i>
+    </a>
+  </div>
+</div>

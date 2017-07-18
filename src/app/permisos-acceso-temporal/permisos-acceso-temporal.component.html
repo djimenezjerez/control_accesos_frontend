@@ -1,0 +1,65 @@
+<div *ngIf="(puertas.length > 0); then permisosAccesosContenido else permisosAccesosVacio"></div>
+
+<ng-template #permisosAccesosVacio>
+  <div class="col s12">
+    No existen puertas registradas en el sistema
+  </div>
+</ng-template>
+
+<ng-template #permisosAccesosContenido>
+  <div class="col s12">
+    <h4>Permisos de acceso temporal</h4>
+  </div>
+
+  <div class="col s12">
+    <table class="centered tablaUsuarios">
+      <thead>
+        <th>Usuario</th>
+        <th>Puerta</th>
+        <th>Desde</th>
+        <th>Hasta</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select #seleccionPersona materialize="material_select">
+              <option *ngFor="let persona of personas; let i = index" [selected]="i == 0" [value]="persona.id">{{persona.nombre}}</option>
+            </select>
+          </td>
+          <td>
+            <select #seleccionPuerta materialize="material_select">
+              <option *ngFor="let puerta of puertas; let i = index" [selected]="i == 0" [value]="puerta.id">{{puerta.detalle}}</option>
+            </select>
+          </td>
+          <td>
+            <input type="date" (ngModelChange)="nuevoFechaIni = $event" [ngModel]="nuevoFechaIni | date: 'y-MM-dd'">
+          </td>
+          <td>
+            <input type="date" (ngModelChange)="nuevoFechaFin = $event" [ngModel]="nuevoFechaFin | date: 'y-MM-dd'">
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light green" (click)="insertarPermiso(seleccionPersona.value, seleccionPuerta.value, nuevoFechaIni, nuevoFechaFin)">
+              <i class="tiny material-icons">add</i>
+            </a>
+          </td>
+        </tr>
+        <tr *ngFor="let permiso of permisosAcceso">
+          <td>{{permiso.Persona.nombre}}</td>
+          <td title="{{permiso.Puerta.detalle}}">{{permiso.Puerta.detalle}}</td>
+          <td>
+            <input type="date" (ngModelChange)="permiso.fechaInicio = $event" (change)="actualizarFechaPermiso(permiso.id, permiso.fechaInicio, permiso.fechaFin)" [ngModel]="permiso.fechaInicio | date: 'y-MM-dd'">
+          </td>
+          <td>
+            <input type="date" (ngModelChange)="permiso.fechaFin = $event" (change)="actualizarFechaPermiso(permiso.id, permiso.fechaInicio, permiso.fechaFin)" [ngModel]="permiso.fechaFin | date: 'y-MM-dd'">
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light red" (click)="eliminarPermiso(permiso.id)">
+              <i class="tiny material-icons">clear</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

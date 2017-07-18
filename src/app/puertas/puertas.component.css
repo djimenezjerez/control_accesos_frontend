@@ -1,0 +1,8 @@
+.tablaPuertas {
+  table-layout: fixed;
+  margin-top: 3em;
+}
+
+th {
+  text-align:center
+}

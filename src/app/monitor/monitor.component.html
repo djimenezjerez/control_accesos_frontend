@@ -1,0 +1,69 @@
+<div class="col s12">
+
+  <div>
+    <div class="col s12">
+      <h2>Monitor de accesos</h2>
+    </div>
+    <div class="col s12">
+      <h3>Puertas</h3>
+    </div>
+
+    <div *ngIf="(puertas.length === 0);then puertasVacio else puertasContenido"></div>
+
+    <ng-template #puertasVacio>
+      <div class="col s12">
+        No existen puertas registradas
+      </div>
+    </ng-template>
+
+    <ng-template #puertasContenido>
+      <div class="col s12">
+        <ul>
+          <li *ngFor="let puerta of puertas" class="col s3">
+            <!-- <button class="btn-large waves-effect waves-light {{(puerta.estadoActual) ? 'green' : 'red'}}" (click)="abrirPuerta(puerta.id)" [disabled]="!isAdmin"> -->
+            <button class="btn-large waves-effect waves-light {{(puerta.estadoActual) ? 'green' : 'red'}}" (click)="abrirPuerta(puerta.id)">
+              {{puerta.nombre}}
+              <i class="tiny material-icons right">{{(puerta.estadoActual) ? 'lock_outline' : 'lock_open'}}</i>
+            </button>
+            <time>{{puerta.updatedAt | amCalendar:nextDay }}</time>
+          </li>
+        </ul>
+      </div>
+    </ng-template>
+  </div>
+
+  <div [hidden]="!isAdmin">
+    <div class="col s12">
+      <h3>Accesos</h3>
+    </div>
+
+    <div *ngIf="(accesos.length === 0);then accesosVacio else accesosContenido"></div>
+
+    <ng-template #accesosVacio>
+      <div class="col s12">
+        No existen accesos registrados
+      </div>
+    </ng-template>
+
+    <ng-template #accesosContenido>
+      <div class="col s12">
+        <table class="striped centered">
+          <tbody>
+            <tr *ngFor="let acceso of accesos">
+              <td>
+                {{acceso.Persona.nombre}}
+              </td>
+              <td>
+                {{acceso.Puerta.detalle}}
+              </td>
+              <td>
+                <time>{{acceso.fechaHora | amCalendar:nextDay }}</time>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+  </div>
+
+</div>

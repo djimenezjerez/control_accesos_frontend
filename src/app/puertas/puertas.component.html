@@ -1,0 +1,89 @@
+<div *ngIf="(arduinos.length === 0);then puertasVacio else puertasContenido"></div>
+
+<div class="col s12">
+  <ng-template #puertasVacio>
+    <div class="col s12">
+      Primero debe crear un dispositivo de control
+    </div>
+  </ng-template>
+
+  <ng-template #puertasContenido>
+    <div class="col s12">
+      <h4>Puertas</h4>
+    </div>
+
+    <table class="highlight centered tablaPuertas">
+      <thead>
+        <th>Código</th>
+        <th>Detalle</th>
+        <th>Estado Inicial</th>
+        <th>Hardware de control</th>
+        <th>Pin de control</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" [(ngModel)]="nuevaPuerta.nombre">
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="nuevaPuerta.detalle">
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="nuevaPuerta.estadoInicial">
+              <option value="true" selected="true">Nivel Alto</option>
+              <option value="false">Nivel Bajo</option>
+            </select>
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="nuevaPuerta.arduinoControl"  (change)="cambiarArduinoControl($event.target.value)">
+              <option *ngFor="let arduino of arduinos; let i = index" [value]="arduino.id" [selected]="i == 0">{{arduino.detalle}}</option>
+            </select>
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="nuevaPuerta.pin">
+              <option *ngFor="let pin of arduinoControl.pinesSalida; let i = index" [value]="pin" [selected]="i == 0">{{pin}}</option>
+            </select>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light green" (click)="insertarPuerta()">
+              <i class="tiny material-icons">add</i>
+            </a>
+          </td>
+        </tr>
+        <tr *ngFor="let puerta of puertas">
+          <td>
+            <input type="text" [(ngModel)]="puerta.nombre" (keyup.enter)="actualizarPuerta(puerta.id, {
+              nombre: puerta.nombre
+            })">
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="puerta.detalle" (keyup.enter)="actualizarPuerta(puerta.id, {
+              detalle: puerta.detalle
+            })">
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="puerta.estadoInicial" (change)="actualizarPuerta(puerta.id,{estadoInicial:$event.target.value})">
+              <option value="true" [selected]="puerta.estadoInicial">Nivel Alto</option>
+              <option value="false" [selected]="puerta.estadoInicial">Nivel Bajo</option>
+            </select>
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="puerta.arduinoControl" (change)="actualizarPuerta(puerta.id,{arduinoControl:$event.target.value})">
+              <option *ngFor="let arduino of arduinos" [value]="arduino.id" [selected]="arduino.id == puerta.arduinoControl">{{arduino.detalle}}</option>
+            </select>
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="puerta.pin" (change)="actualizarPuerta(puerta.id,{pin: $event.target.value})">
+              <option *ngFor="let pin of puerta.ArduinoControl.pinesSalida" [value]="pin" [selected]="puerta.pin == pin">{{pin}}</option>
+            </select>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light red" (click)="eliminarPuerta(puerta.id)">
+              <i class="tiny material-icons">clear</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>

@@ -1,0 +1,24 @@
+<div class="col s12" id="menuHorizontal">
+  <nav>
+    <div class="nav-wrapper center grey">
+      <ul>
+        <li class="col s6">
+          <a (click)="menu = 'menu1'">Dispositivos de Control</a>
+        </li>
+        <li class="col s6">
+          <a (click)="menu = 'menu2'">Dispositivos de Intefaz Sensorial</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div *ngIf="(menu === 'menu2'); then menu2 else menu1"></div>
+
+<ng-template #menu1>
+  <app-arduinos-control></app-arduinos-control>
+</ng-template>
+
+<ng-template #menu2>
+  <app-arduinos-sensor></app-arduinos-sensor>
+</ng-template>

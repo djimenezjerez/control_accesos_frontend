@@ -1,0 +1,11 @@
+.tablaRespuestas {
+  table-layout: fixed;
+}
+
+th {
+  text-align:center
+}
+
+#btnBuscar {
+  margin-top: 1.5em;
+}

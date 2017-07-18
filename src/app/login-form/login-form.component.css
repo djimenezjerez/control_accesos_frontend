@@ -1,0 +1,14 @@
+.centrado {
+  position: absolute;
+  top: 25%;
+  border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+  border: 0.05em solid #000000;
+  padding: 2em 2em;
+  background-color: #fafafa;
+}
+
+#textoError {
+  color: orange;
+}

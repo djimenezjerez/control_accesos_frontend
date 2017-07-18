@@ -1,0 +1,7 @@
+.tablaSensores {
+  table-layout: fixed;
+}
+
+th {
+  text-align:center
+}

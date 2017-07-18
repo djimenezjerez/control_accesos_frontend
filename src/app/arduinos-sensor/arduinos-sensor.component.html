@@ -1,0 +1,100 @@
+<div class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <textarea name="name" style="min-height: 25em;" rows="8" cols="80" readonly #inputTarget>{{programa}}</textarea>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cerrar</a>
+    <a class="waves-effect waves-yellow btn-flat" [ngxClipboard]="inputTarget">Copiar</a>
+  </div>
+</div>
+
+<div *ngIf="(puertas.length === 0);then puertasVacio else puertasContenido"></div>
+
+<ng-template #puertasVacio>
+  <div class="col s12">
+    Primero debe crear una puerta
+  </div>
+</ng-template>
+
+<ng-template #puertasContenido>
+  <div class="col s12">
+    <h4>Dispositivos de interfaz sensorial</h4>
+  </div>
+
+  <div class="col s12">
+    <table class="highlight centered tablaSensores">
+      <thead>
+        <th>Dispositivo</th>
+        <th>IP</th>
+        <th>MAC</th>
+        <th>Puerta</th>
+        <th>Cliente MQTT</th>
+        <th>Programa</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" [(ngModel)]="nuevoArduino.detalle">
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="nuevoArduino.ip">
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="nuevoArduino.mac">
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="nuevoArduino.puerta">
+              <option *ngFor="let puerta of puertas; let i = index;" [value]="puerta.id" [selected]="i == 0">{{puerta.nombre}}</option>
+            </select>
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="nuevoArduino.clienteMqtt">
+              <option *ngFor="let cliente of clientesMqtt; let i = index;" [value]="cliente.id" [selected]="i == 0">{{cliente.usuario}}</option>
+            </select>
+          </td>
+          <td></td>
+          <td>
+            <a class="btn-floating waves-effect waves-light green" (click)="insertarArduino()">
+              <i class="tiny material-icons">add</i>
+            </a>
+          </td>
+        </tr>
+        <tr *ngFor="let arduino of arduinos">
+          <td>
+            <input type="text" [(ngModel)]="arduino.detalle" (keyup.enter)="actualizarArduino(arduino.id, {
+              detalle: arduino.detalle
+            })">
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="arduino.ip" (keyup.enter)="actualizarArduino(arduino.id, {
+              ip: arduino.ip
+            })">
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="arduino.mac" (keyup.enter)="actualizarArduino(arduino.id, {
+              mac: arduino.mac
+            })">
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="arduino.puerta" (change)="actualizarArduino(arduino.id, {puerta:$event.target.value})">
+              <option *ngFor="let puerta of puertas" [value]="puerta.id" [selected]="(puertas.includes(arduino.puerta)) ? true : false">{{puerta.nombre}}</option>
+            </select>
+          </td>
+          <td>
+            <select materialize="material_select" [(ngModel)]="arduino.clienteMqtt" (change)="actualizarArduino(arduino.id,{clienteMqtt:$event.target.value})">
+              <option *ngFor="let cliente of clientesMqtt" [value]="cliente.id" [selected]="(clientesMqtt.includes(arduino.ClienteMqtt)) ? true : false">{{cliente.usuario}}</option>
+            </select>
+          </td>
+          <td>
+            <a class="waves-effect waves-light btn modal-trigger" (click)="pedirPrograma(arduino.id); openModal()">Programa</a>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light red" (click)="eliminarArduino(arduino.id)">
+              <i class="tiny material-icons">clear</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

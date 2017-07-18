@@ -1,0 +1,55 @@
+<div class="col s12">
+  <div class="col s12">
+    <h4>Clientes MQTT</h4>
+  </div>
+
+  <div class="col s12">
+    <table class="centered tablaClientes">
+      <thead>
+        <th>Usuario</th>
+        <th>Contraseña</th>
+        <th>Administrador</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" [(ngModel)]="nuevoCliente.usuario">
+          </td>
+          <td>
+            <input type="password" [(ngModel)]="nuevoCliente.clave">
+          </td>
+          <td>
+            <input type="checkbox" id="nC" [(ngModel)]="nuevoCliente.admin"/>
+            <label for="nC"></label>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light green" (click)="insertarCliente()">
+              <i class="tiny material-icons">add</i>
+            </a>
+          </td>
+        </tr>
+        <tr *ngFor="let cliente of clientesMqtt; let i = index;">
+          <td>
+            <input type="text" [(ngModel)]="cliente.usuario" (keyup.enter)="actualizarCliente(cliente.id, {
+              usuario: cliente.usuario
+            })">
+          </td>
+          <td>
+            <input type="password" [(ngModel)]="cliente.clave" (keyup.enter)="actualizarCliente(cliente.id, {
+              clave: cliente.clave
+            })">
+          </td>
+          <td>
+            <input type="checkbox" id="c{{i}}" [checked]="cliente.admin" (change)="cliente.admin = !cliente.admin; actualizarCliente(cliente.id, {admin: cliente.admin})"/>
+            <label for="c{{i}}"></label>
+          </td>
+          <td>
+            <a class="btn-floating waves-effect waves-light red" (click)="eliminarCliente(cliente.id)">
+              <i class="tiny material-icons">clear</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

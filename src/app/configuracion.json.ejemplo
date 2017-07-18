@@ -1,0 +1,9 @@
+{
+  "servidorApi": "localhost",
+  "puertoApi": 3443,
+  "versionApi": 2,
+  "sslApi": true,
+  "servidorSocket": "localhost",
+  "puertoSocket": 4337,
+  "sslSocket": true
+}

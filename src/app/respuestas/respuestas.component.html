@@ -1,0 +1,63 @@
+<div class="col s12">
+  <div class="col s12">
+    <h5>
+      Respuestas
+    </h5>
+  </div>
+  <div class="col s4">
+    <label for="nuevoFechaIni">Desde</label>
+    <input id="nuevoFechaIni" type="date" (ngModelChange)="nuevoFechaIni = $event" [ngModel]="nuevoFechaIni | date: 'y-MM-dd'">
+  </div>
+  <div class="col s4">
+    <label for="nuevoFechaFin">Hasta</label>
+    <input id="nuevoFechaFin" type="date" (ngModelChange)="nuevoFechaFin = $event" [ngModel]="nuevoFechaFin | date: 'y-MM-dd'">
+  </div>
+  <div class="col s4">
+    <a id="btnBuscar" class="btn-floating waves-effect waves-light blue" (click)="buscarRespuestas(nuevoFechaIni, nuevoFechaFin)">
+      <i class="tiny material-icons">search</i>
+    </a>
+  </div>
+
+  <div *ngIf="(respuestas.length === 0); then respuestasVacio else respuestasContenido"></div>
+
+  <ng-template #respuestasVacio>
+    <div class="col s12">
+      No existen respuestas registradas en ese rango de fechas
+    </div>
+  </ng-template>
+
+  <ng-template #respuestasContenido>
+    <div class="col s12">
+      <table class="centered highlight tablaRespuestas">
+        <thead>
+          <th>Comando</th>
+          <th>Respuesta</th>
+          <th>Dispositivo</th>
+          <th>Fecha/Hora</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let respuesta of respuestas">
+            <td>
+              <div *ngIf="(respuesta.comando == null); then comandoVacio else comandoContenido"></div>
+              <ng-template #comandoVacio></ng-template>
+              <ng-template #comandoContenido>{{respuesta.comando}}</ng-template>
+            </td>
+            <td>
+              <div *ngIf="(respuesta.respuesta == null); then respuestaVacio else respuestaContenido"></div>
+              <ng-template #respuestaVacio></ng-template>
+              <ng-template #respuestaContenido>{{respuesta.respuesta}}</ng-template>
+            </td>
+            <td>
+              <div *ngIf="(respuesta.arduino == null); then arduinoVacio else arduinoContenido"></div>
+              <ng-template #arduinoVacio></ng-template>
+              <ng-template #arduinoContenido>{{respuesta.Arduino.detalle}}</ng-template>
+            </td>
+            <td>
+              <time>{{respuesta.createdAt | amDateFormat:'LL - hh:mmA' }}</time>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+</div>
