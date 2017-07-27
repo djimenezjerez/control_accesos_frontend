@@ -3,7 +3,6 @@ certs/
 src/app/configuracion.json
 
 # compiled output
-/dist
 /tmp
 /out-tsc
 
